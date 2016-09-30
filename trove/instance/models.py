@@ -793,8 +793,8 @@ class Instance(BuiltInstance):
         if not nics:
             nics = []
         if CONF.default_neutron_networks:
-            nics = [{"net-id": net_id}
-                    for net_id in CONF.default_neutron_networks] + nics
+            nics = nics + [{"net-id": net_id}
+                    for net_id in CONF.default_neutron_networks]
         if nics:
             call_args['nics'] = nics
         if cluster_config:
