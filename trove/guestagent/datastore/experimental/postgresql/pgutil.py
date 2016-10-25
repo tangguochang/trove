@@ -234,7 +234,7 @@ class AccessQuery(object):
             "SELECT datname, pg_encoding_to_char(encoding), datcollate "
             "FROM pg_database "
             "WHERE datistemplate = false "
-            "AND 'user {user}=CTc' = ANY (datacl)".format(user=user)
+            "AND 'user {user}=CTc/{pgadmin}' = ANY (datacl)".format(pgadmin=PG_ADMIN,user=user)
         )
 
     @classmethod
