@@ -414,6 +414,12 @@ common_opts = [
                help='Maximum size of a chunk saved in guest log container.'),
     cfg.IntOpt('guest_log_expiry', default=2592000,
                help='Expiry (in seconds) of objects in guest log container.'),
+    #add by tanggc begion
+    cfg.BoolOpt('data_volume_delete_on_termination', default=False,
+                help='Whether to delete data volume when the instance is terminated.'),
+    cfg.StrOpt('system_volume_type', default=None,
+                help='volume type of system volume of database instance.'),
+    #add by tanggc end
 ]
 
 

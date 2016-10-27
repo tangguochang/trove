@@ -785,7 +785,18 @@ class FreshInstanceTasks(FreshInstance, NotifyMixin, ConfigurationMixin):
         volume_info = self._build_volume_info(datastore_manager,
                                               volume_size=volume_size,
                                               volume_type=volume_type)
-        block_device_mapping = volume_info['block_device']
+        #comment by tanggc begin
+        #block_device_mapping = volume_info['block_device']
+        #commnet by tanggc end
+        #add by tanggc begin
+        data_volume_delete_on_termination = CONF.get('data_volume_delete_on_termination')
+        block_device_mapping = [{"boot_index": "0", "uuid": image_id, "volume_size": "10",
+                                 "device_name": "vda", "source_type": "image", "destination_type": "volume",
+                                 'delete_on_termination':True},
+                                {"source_type": "volume", "device_name": self.device_path,
+                                 "uuid": volume_info['volumes'][0]['id'], "destination_type": "volume",
+                                 'delete_on_termination':data_volume_delete_on_termination}]
+        #add by tanggc end
         try:
             server = self._create_server(flavor_id, image_id, security_groups,
                                          datastore_manager,
@@ -910,11 +921,23 @@ class FreshInstanceTasks(FreshInstance, NotifyMixin, ConfigurationMixin):
         bdmap = block_device_mapping
         config_drive = CONF.use_nova_server_config_drive
 
+        #add by tanggc begin
+        metadata = {'volume_type':CONF.get('system_volume_type')}
+        server = self.nova_client.servers.create(
+            name, "", flavor_id, files=files, meta=metadata, userdata=userdata,
+            security_groups=security_groups, block_device_mapping_v2=bdmap,
+            availability_zone=availability_zone, nics=nics,
+            config_drive=config_drive)
+        #add by tanggc end
+        #commnet by tanggc begin
+        '''
         server = self.nova_client.servers.create(
             name, image_id, flavor_id, files=files, userdata=userdata,
             security_groups=security_groups, block_device_mapping=bdmap,
             availability_zone=availability_zone, nics=nics,
             config_drive=config_drive)
+        '''
+        #commnet by tanggc end
         LOG.debug("Created new compute instance %(server_id)s "
                   "for instance %(id)s" %
                   {'server_id': server.id, 'id': self.id})
