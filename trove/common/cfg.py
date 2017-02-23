@@ -419,6 +419,8 @@ common_opts = [
                 help='Whether to delete data volume when the instance is terminated.'),
     cfg.StrOpt('system_volume_type', default=None,
                 help='volume type of system volume of database instance.'),
+    cfg.StrOpt('availability_zone',default=None,
+                help='default availability_zone of nova instance for trove.'),
     #add by tanggc end
 ]
 

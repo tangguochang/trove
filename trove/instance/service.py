@@ -268,6 +268,8 @@ class InstanceController(wsgi.Controller):
             backup_id = None
 
         availability_zone = body['instance'].get('availability_zone')
+        if availability_zone is None:
+            availability_zone = CONF.availability_zone
         nics = body['instance'].get('nics')
 
         slave_of_id = body['instance'].get('replica_of',
