@@ -39,7 +39,7 @@ MONGODB_KILL = "sudo kill %s"
 FIND_PID = "ps xaco pid,cmd | awk '/mongo(d|db|s)/ {print $1}'"
 TIME_OUT = 1000
 
-MONGO_USER = {operating_system.REDHAT: "mongod",
+MONGO_USER = {operating_system.REDHAT: "mongodb",
               operating_system.DEBIAN: "mongodb",
               operating_system.SUSE: "mongod"}[OS_NAME]
 
